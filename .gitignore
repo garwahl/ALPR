@@ -107,3 +107,6 @@ venv.bak/
 *.png
 *.jpg
 *.bmp
+
+# editor specific
+*.swp
