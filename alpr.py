@@ -6,6 +6,7 @@
 
 import argparse
 import cv2
+import imutils
 import mahotas
 import numpy as np
 
@@ -35,8 +36,6 @@ contrast = clahe.apply(blurred)
 opening = cv2.morphologyEx(contrast, cv2.MORPH_OPEN, opening_kernal)
 intensity_diff = contrast - opening
 
-intensity_diff = contrast - opening
-
 cv2.imshow("Original",image)
 cv2.imshow("Blurred", blurred)
 cv2.imshow("Contrast Enhanced", contrast)
@@ -59,6 +58,13 @@ sobelY = np.uint8(np.absolute(sobelY))
 sobel = cv2.bitwise_or(sobelX, sobelY)
 
 cv2.imshow("Sobel", sobel)
+
+kernal = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+dilation = cv2.dilate(sobel, kernal, iterations = 1)
+
+cv2.imshow("Dilation", dilation)
+
+cv2.imshow("Flooded", imutils.imfill(dilation))
 
 cv2.waitKey(0)
 
